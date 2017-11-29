@@ -1,116 +1,80 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>HTML5 GetUserMedia Demo</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title></title>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script>
+//判断浏览器是否支持HTML5 Canvas
+window.onload = function () {
+try {
+//动态创建一个canvas元 ，并获取他2Dcontext。如果出现异常则表示不支持 document.createElement("canvas").getContext("2d");
+// document.getElementById("support").innerHTML = "浏览器支持HTML5 CANVAS";
+}
+catch (e) {
+// document.getElementByIdx("support").innerHTML = "浏览器不支持HTML5 CANVAS";
+}
+};
+//这段代 主要是获取摄像头的视频流并显示在Video 签中
+window.addEventListener("DOMContentLoaded", function () {
+var canvas = document.getElementById("canvas"),
+context = canvas.getContext("2d"),
+video = document.getElementById("video"),
+videoObj = { "video": true },
+errBack = function (error) {
+console.log("Video capture error: ", error.code);
+};
+$("#snap").click(function () {
+context.drawImage(video, 0, 0, 330, 250);
+})
+//navigator.getUserMedia这个写法在Opera中好像是navigator.getUserMedianow
+if (navigator.getUserMedia) {
+navigator.getUserMedia(videoObj, function (stream) {
+video.src = stream;
+video.play();
+}, errBack);
+} else if (navigator.webkitGetUserMedia) {
+navigator.webkitGetUserMedia(videoObj, function (stream) {
+video.src = window.webkitURL.createObjectURL(stream);
+video.play();
+}, errBack);
+}
+
+}, false);
+
+//上传服务器
+function CatchCode() {
+var canvans = document.getElementById("canvas");
+//获取浏览器页面的画布对象
+//以下开始编 数据
+var imgData = canvans.toDataURL();
+//将图像转换为base64数据
+var base64Data = imgData.substr(22);
+//在前端截取22位之后的字符串作为图像数据
+//开始异步上
+$.post("uploadImgCode.ashx", { "img": base64Data }, function (data, status) {
+if (status == "success") {
+if (data == "OK") {
+alert("二维 已经解析");
+}
+else {
+// alert(data);
+}
+}
+else {
+alert("数据上 失败");
+}
+}, "text");
+}
+</script>
 </head>
 <body>
-<input type="button" title="开启摄像头" value="开启前置摄像头" onclick="getMedia(0);" /><input type="button" title="开启摄像头" value="开启后置摄像头" onclick="getMedia(1);" /><br />
-<video height="120px" autoplay="autoplay"></video><hr />
-<input type="button" title="拍照" value="拍照" onclick="getPhoto();" /><br />
-<canvas id="canvas1" height="120px" ></canvas><hr />
-<input type="button" title="视频" value="视频" onclick="getVedio();" /><br />
-<canvas id="canvas2" height="120px"></canvas>
-
-<script type="text/javascript">
-var video = document.querySelector('video');
-var audio, audioType;
-
-var canvas1 = document.getElementById('canvas1');
-var context1 = canvas1.getContext('2d');
-
-var canvas2 = document.getElementById('canvas2');
-var context2 = canvas2.getContext('2d');
-
-navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
-window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
-
-var exArray = []; //存储设备源ID
-MediaStreamTrack.getSources(function (sourceInfos) {
-for (var i = 0; i != sourceInfos.length; ++i) {
-var sourceInfo = sourceInfos[i];
-//这里会遍历audio,video，所以要加以区分
-if (sourceInfo.kind === 'video') {
-exArray.push(sourceInfo.id);
-}
-}
-});
-
-function getMedia(a) {
-if (navigator.getUserMedia) {
-navigator.getUserMedia({
-'video': {
-'optional': [{
-'sourceId': exArray[a] //0为前置摄像头，1为后置
-}]
-},
-'audio': true
-}, successFunc, errorFunc); //success是获取成功的回调函数
-}
-else {
-alert('Native device media streaming (getUserMedia) not supported in this browser.');
-}
-}
-
-function successFunc(stream) {
-//alert('Succeed to get media!');
-if (video.mozSrcObject !== undefined) {
-//Firefox中，video.mozSrcObject最初为null，而不是未定义的，我们可以靠这个来检测Firefox的支持
-video.mozSrcObject = stream;
-}
-else {
-video.src = window.URL && window.URL.createObjectURL(stream) || stream;
-}
-
-//video.play();
-
-// 音频
-audio = new Audio();
-audioType = getAudioType(audio);
-if (audioType) {
-audio.src = 'polaroid.' + audioType;
-audio.play();
-}
-}
-function errorFunc(e) {
-alert('Error！' + e);
-}
-
-
-// 将视频帧绘制到Canvas对象上,Canvas每60ms切换帧，形成肉眼视频效果
-function drawVideoAtCanvas(video, context) {
-window.setInterval(function () {
-context.drawImage(video, 0, 0, 90, 120);
-}, 60);
-}
-
-//获取音频格式
-function getAudioType(element) {
-if (element.canPlayType) {
-if (element.canPlayType('audio/mp4; codecs="mp4a.40.5"') !== '') {
-return ('aac');
-} else if (element.canPlayType('audio/ogg; codecs="vorbis"') !== '') {
-return ("ogg");
-}
-}
-return false;
-}
-
-// vedio播放时触发，绘制vedio帧图像到canvas
-// video.addEventListener('play', function () {
-// drawVideoAtCanvas(video, context2);
-// }, false);
-
-//拍照
-function getPhoto() {
-context1.drawImage(video, 0, 0, 90, 120); //将video对象内指定的区域捕捉绘制到画布上指定的区域，实现拍照。
-}
-
-//视频
-function getVedio() {
-drawVideoAtCanvas(video, context2);
-}
-
-</script>
+<div id="contentHolder">
+<video id="video" width="320" height="320" autoplay>
+</video>
+<input type="button" id="snap" style="width:100px;height:35px;" value="拍 照" />
+<canvas style="" id="canvas" width="320" height="320">
+</canvas>
+</div>
 </body>
 </html>
