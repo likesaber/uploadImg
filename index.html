@@ -17,6 +17,8 @@
 <body>
   <video id="video" autoplay=""></video>
   <canvas id="canvas"></canvas>
+  <button onclick="getVideo()">获取视频流</button><br/>
+  <button onclick="clickCanvas()">获取照片</button>
   <h1 class="text-center">上传图片</h1>
   <!-- <hr/>
     <input type="file"  accept="image/*"  id="uploadImage" onchange="selectFileImage(this);"/>
@@ -63,23 +65,28 @@
   var errocb = function () {  
     alert("调用失败");
   }  
-  if (navigator.getUserMedia) { // 标准的API  
+  function getVideo(){
+    if (navigator.getUserMedia) { // 标准的API  
       navigator.getUserMedia({ "video": true }, function (stream) {  
           video_element.src = stream;  
           video_element.play();  
 
       }, errocb);  
-  } else if (navigator.webkitGetUserMedia) { // WebKit 核心的API  
-      navigator.webkitGetUserMedia({ "video": true }, function (stream) {  
-          video_element.src = window.webkitURL.createObjectURL(stream);  
-          video_element.play();  
-      }, errocb);  
-  }  
-  var canvas=document.getElementById('canvas'); //动态创建画布对象
-  var ctx=canvas.getContext('2d');
-  ctx.fillStyle="#ffffff";
-  ctx.fillRect(0,0,320,400);
-  ctx.drawImage(video_element, 0, 0, 640, 480);  
+    } else if (navigator.webkitGetUserMedia) { // WebKit 核心的API  
+        navigator.webkitGetUserMedia({ "video": true }, function (stream) {  
+            video_element.src = window.webkitURL.createObjectURL(stream);  
+            video_element.play();  
+        }, errocb);  
+    } 
+  }
+  function clickCanvas(){
+    var canvas=document.getElementById('canvas'); //动态创建画布对象
+    var ctx=canvas.getContext('2d');
+    ctx.fillStyle="#ffffff";
+    ctx.fillRect(0,0,320,400);
+    ctx.drawImage(video_element, 0, 0, 640, 480); 
+  }
+   
   </script>
 </body>
 </html>
