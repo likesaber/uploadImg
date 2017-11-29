@@ -15,73 +15,71 @@
   <script src="<%=basePath %>en/test/user/my_exam/js/mobileBUGFix.mini.js" type="text/javascript"></script>
 </head>
 <body>
-  <!-- <video id="video" autoplay=""></video> -->
+  <video id="video" autoplay=""></video>
+  <canvas id="canvas"></canvas>
   <h1 class="text-center">上传图片</h1>
-  <hr/>
+  <!-- <hr/>
     <input type="file"  accept="image/*"  id="uploadImage" onchange="selectFileImage(this);"/>
     <div id="result" align="center"> <img alt="" src="" id="myImage"/>  </div>
-  <hr/>
+  <hr/> -->
   
   
   <script>
-  $("input:file").localResizeIMG({
-      width: 500,
-      quality: 1,
-      success: function (result) {
-        var img = new Image();
-        img.src = result.base64;
-        img.id="photo";
-        //console.log(result.clearBase64);
-        //$("body").append(img);
+  // $("input:file").localResizeIMG({
+  //     width: 500,
+  //     quality: 1,
+  //     success: function (result) {
+  //       var img = new Image();
+  //       img.src = result.base64;
+  //       img.id="photo";
+  //       //console.log(result.clearBase64);
+  //       //$("body").append(img);
         
-        $("#result").empty();
-        $("#result").append(img); //呈现图像(拍照結果)
+  //       $("#result").empty();
+  //       $("#result").append(img); //呈现图像(拍照結果)
         
-        $.ajax({
-                  async:false,//是否异步  
-                  cache:false,//是否使用缓存
-                  dataType: "json",
-          url: "<%=basePath %>MyExam!uploadImg.action",
-          type: "POST",
-          data:{formFile:result.clearBase64,uceId:"<%=uceId %>",queId:"<%=queId %>"},
-          contentType : 'application/x-www-form-urlencoded; charset=utf-8', 
-          timeout: 1000,
-          error: function(){
-            alert("Error loading document");
-          },
-           success: function(result){
-            //alert(result);
-            //console.log(result);
-            alert("Uploads success~");
-          }
-        }); 
-      }
-    });
-  // var video_element=document.getElementById('video');
-  // var errocb = function () {  
-  //   alert("调用失败");
-  // }  
-  // if (navigator.getUserMedia) { // 标准的API  
-  //     navigator.getUserMedia({ "video": true }, function (stream) {  
-  //         video_element.src = stream;  
-  //         video_element.play();  
+  //       $.ajax({
+  //                 async:false,//是否异步  
+  //                 cache:false,//是否使用缓存
+  //                 dataType: "json",
+  //         url: "<%=basePath %>MyExam!uploadImg.action",
+  //         type: "POST",
+  //         data:{formFile:result.clearBase64,uceId:"<%=uceId %>",queId:"<%=queId %>"},
+  //         contentType : 'application/x-www-form-urlencoded; charset=utf-8', 
+  //         timeout: 1000,
+  //         error: function(){
+  //           alert("Error loading document");
+  //         },
+  //          success: function(result){
+  //           //alert(result);
+  //           //console.log(result);
+  //           alert("Uploads success~");
+  //         }
+  //       }); 
+  //     }
+  //   });
 
-  //     }, errocb);  
-  // } else if (navigator.webkitGetUserMedia) { // WebKit 核心的API  
-  //     navigator.webkitGetUserMedia({ "video": true }, function (stream) {  
-  //         video_element.src = window.webkitURL.createObjectURL(stream);  
-  //         video_element.play();  
-  //     }, errocb);  
-  // }  
-  // var canvas=document.createElement('canvas'); //动态创建画布对象
-  // var ctx=canvas.getContext('2d');
-  // ctx.drawImage(video_element, 0, 0, 640, 480);  
-  // document.body.append(canvas);
-  // var cw=vw,ch=vh;
-  // ctx.fillStyle="#ffffff";
-  // ctx.fillRect(0,0,cw,ch);
-  // ctx.drawImage(video_element,0,0,cw,ch,0,0,vw,vh); //将video对象内指定的区域捕捉绘制到画布上指定的区域，可进行不等大不等位的绘制。
-  // document.body.append(canvas);
+  var video_element=document.getElementById('video');
+  var errocb = function () {  
+    alert("调用失败");
+  }  
+  if (navigator.getUserMedia) { // 标准的API  
+      navigator.getUserMedia({ "video": true }, function (stream) {  
+          video_element.src = stream;  
+          video_element.play();  
+
+      }, errocb);  
+  } else if (navigator.webkitGetUserMedia) { // WebKit 核心的API  
+      navigator.webkitGetUserMedia({ "video": true }, function (stream) {  
+          video_element.src = window.webkitURL.createObjectURL(stream);  
+          video_element.play();  
+      }, errocb);  
+  }  
+  var canvas=document.getElementById('canvas'); //动态创建画布对象
+  var ctx=canvas.getContext('2d');
+  ctx.fillStyle="#ffffff";
+  ctx.fillRect(0,0,320,400);
+  ctx.drawImage(video_element, 0, 0, 640, 480);  
   </script>
 </body>
 </html>
