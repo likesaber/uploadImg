@@ -115,7 +115,8 @@
     handleeUping();
   }
   function addImg(){
-    try{
+    try
+    {
       var imgList = document.getElementById("imgList");
       var img = document.createElement("img");
       alert('设置为：'+url);
@@ -124,7 +125,8 @@
       alert('添加成功!');
       handleeUping();
       alert(img);
-    }catch(){
+    }
+    catch(error){
       alert('报错了。');
     }
   }
