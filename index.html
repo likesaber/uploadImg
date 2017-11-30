@@ -39,11 +39,8 @@
     border-bottom: 1px solid #a09d9d;
   }
   .imgList img{
-    /*width: 30%;
-    margin: 1.5%;*/
-    width: 300px;
-    height: 400px;
-    background: #000;
+    width: 30%;
+    margin: 1.5%;
   }
   .uping{
     width: 100%;
@@ -89,7 +86,7 @@
     </label>
     <div class="uping" id="uping">
       <div class="uping-btn">
-        <span class="btn-success" onclick="addImg()">确认</span>
+        <span class="btn-success" onclick="addImg()">确认上传</span>
         <span class="btn-error" onclick="handleeUping()">取消</span>
       </div>
       <img id="uping-img" src="" alt="">
@@ -120,14 +117,11 @@
       var imgList = document.getElementById("imgList");
       var img = document.createElement("img");
       img.src = url;
-      alert('imgList：'+imgList.appendChild);
       imgList.appendChild(img);
-      alert('添加成功!');
       handleeUping();
-      alert(img);
     }
     catch(error){
-      alert('报错了。'+error);
+      alert(error);
     }
   }
   </script>
