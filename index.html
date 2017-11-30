@@ -105,18 +105,18 @@
   <script>
   var url;
   function handleeUping(){
-    let uping = document.getElementById("uping");
+    var uping = document.getElementById("uping");
     uping.style.display = uping.style.display=='block'?'none':'block';
   }
   function changeImg(file){
     url = window.URL.createObjectURL(file.files[0]);
-    let upImg = document.getElementById("uping-img");
+    var upImg = document.getElementById("uping-img");
     upImg.src = url;
     handleeUping();
   }
   function addImg(){
-    let imgList = document.getElementById("imgList");
-    let img = document.createElement("img");
+    var imgList = document.getElementById("imgList");
+    var img = document.createElement("img");
     alert('设置为：'+url);
     img.src = url;
     imgList.append(img);
