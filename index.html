@@ -115,14 +115,18 @@
     handleeUping();
   }
   function addImg(){
-    var imgList = document.getElementById("imgList");
-    var img = document.createElement("img");
-    alert('设置为：'+url);
-    img.src = url;
-    imgList.append(img);
-    alert('添加成功!');
-    handleeUping();
-    alert(img);
+    try{
+      var imgList = document.getElementById("imgList");
+      var img = document.createElement("img");
+      alert('设置为：'+url);
+      img.src = url;
+      imgList.append(img);
+      alert('添加成功!');
+      handleeUping();
+      alert(img);
+    }catch(){
+      alert('报错了。');
+    }
   }
   </script>
 </body>
