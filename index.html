@@ -109,23 +109,31 @@
   <script>
   var url;
   function handleeUping(){
-    let uping = document.getElementById("uping");
+    var uping = document.getElementById("uping");
     uping.style.display = uping.style.display=='block'?'none':'block';
   }
   function changeImg(file){
-    alert('进入change方法'+file);
-    url = window.URL.createObjectURL(file.files[0]);
-    let upImg = document.getElementById("uping-img");
+    // url = window.URL.createObjectURL(file.files[0]);
+    getFileUrl('uploadFile');
+    var upImg = document.getElementById("uping-img");
     upImg.src = url;
-    alert(url);
     handleeUping();
   }
+  function getFileUrl(sourceId) { 
+    if(navigator.userAgent.indexOf("Firefox")>0) { // Firefox 
+      url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0)); 
+    } else if(navigator.userAgent.indexOf("Chrome")>0) { // Chrome 
+      url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0)); 
+    } else {
+      url = document.getElementById(sourceId).value; 
+    }
+  } 
   function addImg(){
     alert('点击：'+url);
-    let imgList = document.getElementById("imgList");
+    var imgList = document.getElementById("imgList");
     // let div = document.createElement("div");
     // div.class='img-box';
-    let img = document.createElement("img");
+    var img = document.createElement("img");
     img.src = url;
     handleeUping();
     // div.append(img);
