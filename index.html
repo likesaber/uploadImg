@@ -39,8 +39,10 @@
     border-bottom: 1px solid #a09d9d;
   }
   .imgList img{
-    width: 30%;
-    margin: 1.5%;
+    /*width: 30%;
+    margin: 1.5%;*/
+    width: 300px;
+    height: 400px;
     background: #000;
   }
   .uping{
@@ -83,7 +85,7 @@
 <body>
   <div class="upload">
     <label for="uploadFile" class="uploadLabel">
-        点击上传
+        点击拍照
     </label>
     <div class="uping" id="uping">
       <div class="uping-btn">
@@ -118,6 +120,7 @@
     img.src = url;
     handleeUping();
     imgList.append(img);
+    alert(img);
   }
   </script>
 </body>
