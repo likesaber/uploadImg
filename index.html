@@ -113,14 +113,15 @@
     uping.style.display = uping.style.display=='block'?'none':'block';
   }
   function changeImg(file){
+    alert('进入change方法'+file);
     url = window.URL.createObjectURL(file.files[0]);
     let upImg = document.getElementById("uping-img");
     upImg.src = url;
-    alert(window.URL.createObjectURL);
     alert(url);
     handleeUping();
   }
   function addImg(){
+    alert('点击：');
     let imgList = document.getElementById("imgList");
     // let div = document.createElement("div");
     // div.class='img-box';
