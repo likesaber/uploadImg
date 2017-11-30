@@ -41,7 +41,7 @@
   .imgList img{
     width: 30%;
     margin: 1.5%;
-    /*width: calc(100%/3);*/
+    background: #000;
   }
   .uping{
     width: 100%;
@@ -76,14 +76,8 @@
   }
   #uping-img{
     max-width: 100%;
-    /*max-height: 100%;*/
     vertical-align: middle;
   }
-  /*.img-box{
-    display: inline-block;
-    width: calc(100%/3);
-    height: 
-  }*/
   </style>
 </head>
 <body>
@@ -109,34 +103,20 @@
   <script>
   var url;
   function handleeUping(){
-    var uping = document.getElementById("uping");
+    let uping = document.getElementById("uping");
     uping.style.display = uping.style.display=='block'?'none':'block';
   }
   function changeImg(file){
-    // url = window.URL.createObjectURL(file.files[0]);
-    getFileUrl('uploadFile');
-    var upImg = document.getElementById("uping-img");
+    url = window.URL.createObjectURL(file.files[0]);
+    let upImg = document.getElementById("uping-img");
     upImg.src = url;
     handleeUping();
   }
-  function getFileUrl(sourceId) { 
-    if(navigator.userAgent.indexOf("Firefox")>0) { // Firefox 
-      url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0)); 
-    } else if(navigator.userAgent.indexOf("Chrome")>0) { // Chrome 
-      url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0)); 
-    } else {
-      url = document.getElementById(sourceId).value; 
-    }
-  } 
   function addImg(){
-    alert('点击：'+url);
-    var imgList = document.getElementById("imgList");
-    // let div = document.createElement("div");
-    // div.class='img-box';
-    var img = document.createElement("img");
+    let imgList = document.getElementById("imgList");
+    let img = document.createElement("img");
     img.src = url;
     handleeUping();
-    // div.append(img);
     imgList.append(img);
   }
   </script>
