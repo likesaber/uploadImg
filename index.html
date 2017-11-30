@@ -2,60 +2,120 @@
 <html lang="ZH-CN">
 <head>
   <meta charset="utf-8">
-  <title>H5调用摄像头</title>
+  <title>上传答案图片</title>
   <style>
+  html,body{
+    width: 100%;
+    height: 100%;
+  }
+  .upload{
+    min-height: 10rem;
+    border: 1px dashed #a09d9d;
+    background: #eee;
+  }
+  #uploadFile{
+    display: none;
+  }
+  .uploadLabel{
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    line-height: 10rem;
+    font-size: 3rem;
+    color:#a09d9d;
+  }
+  .imgList{
+    margin-top: 2rem;
+  }
+  .imgList h3{
+    margin-bottom: 2rem;
+    padding:1rem 0;
+    color:#a09d9d;
+    font-size: 2rem;
+    border-bottom: 1px solid #a09d9d;
+  }
+  .imgList img{
+    width: 300px;
+    margin: 5px;
+  }
+  .uping{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: none;
+  }
+  .uping-btn{
+    position: absolute;
+    left:0;
+    top:0;
+    width: 100%;
+    height: 5rem;
+    background: #fff;
+    opacity: .5;
+  }
+  .uping-btn span{
+    display: inline-block;
+    width: 49%;
+    height: 100%;
+    line-height: 5rem;
+    text-align: center;
+    float: left;
+    font-size: 2rem;
+  }
+  .btn-success{
+    color:green;
+  }
+  .btn-error{
+    color:red;
+    border-left:1px solid #777;
+  }
+  #uping-img{
+    max-width: 100%;
+    /*max-height: 100%;*/
+    vertical-align: middle;
+  }
   </style>
-  <!-- <script type="text/javascript" src="js/jquery.min.js"></script>
-  <script type="text/javascript" src="js/exif.js"></script>
-  <script type="text/javascript" src="js/LocalResizeIMG.js"></script> -->
-  
-  <!--   mobileBUGFix.js 兼容修复移动设备       -->
-  <!-- <script src="js/mobileBUGFix.mini.js" type="text/javascript"></script> -->
 </head>
 <body>
-  <h1 class="text-center">上传图片</h1>
-  <input type="file" multiple="multiple" accept="image/*" capture="camera" >
-  <div>\(^o^)/~</div>
-  <!-- <hr/>
-    <input type="file"  accept="image/*"  id="uploadImage" onchange="selectFileImage(this);"/>
-    <div id="result" align="center"> <img alt="" src="" id="myImage"/>  </div>
-  <hr/>
-   -->
-  
+  <div class="upload">
+    <label for="uploadFile" class="uploadLabel">
+        点击上传
+    </label>
+    <div class="uping" id="uping">
+      <div class="uping-btn">
+        <span class="btn-success" onclick="addImg()">确认</span>
+        <span class="btn-error">取消</span>
+      </div>
+      <img id="uping-img" src="" alt="">
+    </div>
+    <form name="exportForm" enctype="multipart/form-data" target='frame' action="/api/exam/question/export" method="post">
+      <input id="uploadFile" type="file" onchange="changeImg(this)" multiple="multiple" accept="image/*" capture="camera" >
+    </form>
+    <iframe id="frame" style="display:none;" src="" frameborder="0"></iframe>
+  </div>
+  <div class="imgList" id="imgList">
+    <h3>已上传图片</h3>
+  </div>
   <script>
-  // $("input:file").localResizeIMG({
-  //     width: 500,
-  //     quality: 1,
-  //     success: function (result) {
-  //       var img = new Image();
-  //       img.src = result.base64;
-  //       img.id="photo";
-  //       //console.log(result.clearBase64);
-  //       //$("body").append(img);
-        
-  //       $("#result").empty();
-  //       $("#result").append(img); //呈现图像(拍照結果)
-        
-        // $.ajax({
-        //           async:false,//是否异步  
-        //           cache:false,//是否使用缓存
-        //           dataType: "json",
-        //   url: "<%=basePath %>MyExam!uploadImg.action",
-        //   type: "POST",
-        //   data:{formFile:result.clearBase64,uceId:"<%=uceId %>",queId:"<%=queId %>"},
-        //   contentType : 'application/x-www-form-urlencoded; charset=utf-8', 
-        //   timeout: 1000,
-        //   error: function(){
-        //     alert("Error loading document");
-        //   },
-        //    success: function(result){
-        //     //alert(result);
-        //     //console.log(result);
-        //     alert("Uploads success~");
-        //   }
-        // }); 
-      // }
-    // });
+  var url;
+  function handleeUping(){
+    let uping = document.getElementById("uping");
+    uping.style.display = uping.style.display=='block'?'none':'block';
+  }
+  function changeImg(file){
+    url = window.URL.createObjectURL(file.files[0]);
+    let upImg = document.getElementById("uping-img");
+    upImg.src = url;
+    handleeUping();
+  }
+  function addImg(){
+    let imgList = document.getElementById("imgList");
+    let img = document.createElement("img");
+    img.src = url;
+    handleeUping();
+    imgList.append(img);
+  }
   </script>
 </body>
 </html>
