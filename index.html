@@ -7,6 +7,9 @@
   html,body{
     width: 100%;
     height: 100%;
+    background: #f7f5f5;
+    margin: 0;
+    padding: 0;
   }
   .upload{
     min-height: 10rem;
@@ -36,7 +39,9 @@
     border-bottom: 1px solid #a09d9d;
   }
   .imgList img{
-    width: calc(100%/3);
+    width: 30%;
+    margin: 1.5%;
+    /*width: calc(100%/3);*/
   }
   .uping{
     width: 100%;
@@ -111,6 +116,8 @@
     url = window.URL.createObjectURL(file.files[0]);
     let upImg = document.getElementById("uping-img");
     upImg.src = url;
+    alert(window.URL.createObjectURL);
+    alert(url);
     handleeUping();
   }
   function addImg(){
