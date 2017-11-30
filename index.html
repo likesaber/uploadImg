@@ -117,9 +117,11 @@
   function addImg(){
     let imgList = document.getElementById("imgList");
     let img = document.createElement("img");
+    alert('设置为：'+url);
     img.src = url;
-    handleeUping();
     imgList.append(img);
+    alert('添加成功!');
+    handleeUping();
     alert(img);
   }
   </script>
