@@ -36,8 +36,7 @@
     border-bottom: 1px solid #a09d9d;
   }
   .imgList img{
-    width: 300px;
-    margin: 5px;
+    width: calc(100%/3);
   }
   .uping{
     width: 100%;
@@ -75,6 +74,11 @@
     /*max-height: 100%;*/
     vertical-align: middle;
   }
+  /*.img-box{
+    display: inline-block;
+    width: calc(100%/3);
+    height: 
+  }*/
   </style>
 </head>
 <body>
@@ -85,7 +89,7 @@
     <div class="uping" id="uping">
       <div class="uping-btn">
         <span class="btn-success" onclick="addImg()">确认</span>
-        <span class="btn-error">取消</span>
+        <span class="btn-error" onclick="handleeUping()">取消</span>
       </div>
       <img id="uping-img" src="" alt="">
     </div>
@@ -111,9 +115,12 @@
   }
   function addImg(){
     let imgList = document.getElementById("imgList");
+    // let div = document.createElement("div");
+    // div.class='img-box';
     let img = document.createElement("img");
     img.src = url;
     handleeUping();
+    // div.append(img);
     imgList.append(img);
   }
   </script>
