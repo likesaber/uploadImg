@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ZH-CN">
+<head>
+  <meta charset="utf-8">
+  <title>上传答案图片</title>
+  <style>
+  html,body{
+    width: 100%;
+    height: 100%;
+    background: #f7f5f5;
+    margin: 0;
+    padding: 0;
+  }
+  .upload{
+    min-height: 10rem;
+    border: 1px dashed #a09d9d;
+    background: #eee;
+  }
+  #uploadFile{
+    display: none;
+  }
+  .uploadLabel{
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    line-height: 10rem;
+    font-size: 3rem;
+    color:#a09d9d;
+  }
+  .imgList{
+    margin-top: 2rem;
+  }
+  .imgList h3{
+    margin-bottom: 2rem;
+    padding:1rem 0;
+    color:#a09d9d;
+    font-size: 2rem;
+    border-bottom: 1px solid #a09d9d;
+  }
+  .imgList img{
+    width: 30%;
+    margin: 1.5%;
+  }
+  .uping{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: none;
+  }
+  .uping-btn{
+    position: absolute;
+    left:0;
+    top:0;
+    width: 100%;
+    height: 5rem;
+    background: #fff;
+    opacity: .5;
+  }
+  .uping-btn span{
+    display: inline-block;
+    width: 49%;
+    height: 100%;
+    line-height: 5rem;
+    text-align: center;
+    float: left;
+    font-size: 2rem;
+  }
+  .btn-success{
+    color:green;
+  }
+  .btn-error{
+    color:red;
+    border-left:1px solid #777;
+  }
+  #uping-img{
+    max-width: 100%;
+    vertical-align: middle;
+  }
+  </style>
+</head>
+<body>
+  <div class="upload">
+    <label for="uploadFile" class="uploadLabel">
+        点击拍照
+    </label>
+    <div class="uping" id="uping">
+      <div class="uping-btn">
+        <span class="btn-success" onclick="addImg()">确认上传</span>
+        <span class="btn-error" onclick="handleeUping()">取消</span>
+      </div>
+      <img id="uping-img" src="" alt="">
+    </div>
+    <form name="exportForm" enctype="multipart/form-data" target='frame' action="/api/exam/question/export" method="post">
+      <input id="uploadFile" type="file" onchange="changeImg(this)" multiple="multiple" accept="image/*" >
+    </form>
+    <iframe id="frame" style="display:none;" src="" frameborder="0"></iframe>
+  </div>
+  <div class="imgList" id="imgList">
+    <h3>已上传图片</h3>
+  </div>
+  <script>
+  var url;
+  function handleeUping(){
+    var uping = document.getElementById("uping");
+    uping.style.display = uping.style.display=='block'?'none':'block';
+  }
+  function changeImg(file){
+    url = window.URL.createObjectURL(file.files[0]);
+    var upImg = document.getElementById("uping-img");
+    upImg.src = url;
+    handleeUping();
+  }
+  function addImg(){
+    try
+    {
+      var imgList = document.getElementById("imgList");
+      var img = document.createElement("img");
+      img.src = url;
+      imgList.appendChild(img);
+      handleeUping();
+    }
+    catch(error){
+      alert(error);
+    }
+  }
+  </script>
+</body>
+</html>

@@ -1,129 +1,46 @@
-<!DOCTYPE html>
-<html lang="ZH-CN">
+<!doctype html>
+<html>
+
 <head>
-  <meta charset="utf-8">
-  <title>上传答案图片</title>
-  <style>
-  html,body{
-    width: 100%;
-    height: 100%;
-    background: #f7f5f5;
-    margin: 0;
-    padding: 0;
-  }
-  .upload{
-    min-height: 10rem;
-    border: 1px dashed #a09d9d;
-    background: #eee;
-  }
-  #uploadFile{
-    display: none;
-  }
-  .uploadLabel{
-    text-align: center;
-    display: inline-block;
-    width: 100%;
-    height: 100%;
-    line-height: 10rem;
-    font-size: 3rem;
-    color:#a09d9d;
-  }
-  .imgList{
-    margin-top: 2rem;
-  }
-  .imgList h3{
-    margin-bottom: 2rem;
-    padding:1rem 0;
-    color:#a09d9d;
-    font-size: 2rem;
-    border-bottom: 1px solid #a09d9d;
-  }
-  .imgList img{
-    width: 30%;
-    margin: 1.5%;
-  }
-  .uping{
-    width: 100%;
-    height: 100%;
-    position: relative;
-    display: none;
-  }
-  .uping-btn{
-    position: absolute;
-    left:0;
-    top:0;
-    width: 100%;
-    height: 5rem;
-    background: #fff;
-    opacity: .5;
-  }
-  .uping-btn span{
-    display: inline-block;
-    width: 49%;
-    height: 100%;
-    line-height: 5rem;
-    text-align: center;
-    float: left;
-    font-size: 2rem;
-  }
-  .btn-success{
-    color:green;
-  }
-  .btn-error{
-    color:red;
-    border-left:1px solid #777;
-  }
-  #uping-img{
-    max-width: 100%;
-    vertical-align: middle;
-  }
-  </style>
-</head>
+    <meta charset="utf-8">
+    <title>
+        服务端-控制台
+    </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="//at.alicdn.com/t/font_610358_ktmoq7ho0zarlik9.css" rel='stylesheet' />
+    <!--[if lt IE 9]>
+<script src="https://g.alicdn.com/aliww/ww/json/json.js" charset="utf-8"></script>
+<![endif]-->
+    <style>
+        #root {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+<link href="/assets/css/style.ed3534696386379c264f.css" rel="stylesheet"></head>
+
 <body>
-  <div class="upload">
-    <label for="uploadFile" class="uploadLabel">
-        点击拍照
-    </label>
-    <div class="uping" id="uping">
-      <div class="uping-btn">
-        <span class="btn-success" onclick="addImg()">确认上传</span>
-        <span class="btn-error" onclick="handleeUping()">取消</span>
-      </div>
-      <img id="uping-img" src="" alt="">
-    </div>
-    <form name="exportForm" enctype="multipart/form-data" target='frame' action="/api/exam/question/export" method="post">
-      <input id="uploadFile" type="file" onchange="changeImg(this)" multiple="multiple" accept="image/*" >
-    </form>
-    <iframe id="frame" style="display:none;" src="" frameborder="0"></iframe>
-  </div>
-  <div class="imgList" id="imgList">
-    <h3>已上传图片</h3>
-  </div>
-  <script>
-  var url;
-  function handleeUping(){
-    var uping = document.getElementById("uping");
-    uping.style.display = uping.style.display=='block'?'none':'block';
-  }
-  function changeImg(file){
-    url = window.URL.createObjectURL(file.files[0]);
-    var upImg = document.getElementById("uping-img");
-    upImg.src = url;
-    handleeUping();
-  }
-  function addImg(){
-    try
-    {
-      var imgList = document.getElementById("imgList");
-      var img = document.createElement("img");
-      img.src = url;
-      imgList.appendChild(img);
-      handleeUping();
-    }
-    catch(error){
-      alert(error);
-    }
-  }
-  </script>
-</body>
+    <div id="root"></div>
+    <script>
+        String.prototype.startsWith = function (str) {
+            if (str == null || str == '' || this.length == 0 || str.length > this.length)
+                return false;
+            if (this.substr(0, str.length) == str)
+                return true;
+            else
+                return false;
+        }
+        window.PUBLIC_API_SERVER_URL = 'http://' + window.location.hostname.replace(window.location.hostname.split('.')[0], 'api').replace('.local', '');
+        window.PUBLIC_SERVER_URL = 'http://' + window.location.hostname.replace(window.location.hostname.split('.')[0], 'content').replace('.local', '');
+    </script>
+<script type="text/javascript" src="/assets/client.ed353469.js"></script></body>
+<script>window.main()</script>
+
 </html>
